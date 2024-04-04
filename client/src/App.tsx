@@ -1,6 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material';
 import './App.css'
 import Navbar from './components/Navbar';
+import SignInSide from './components/SignInSIde';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (
     <ThemeProvider theme = {theme}>
       <Navbar/>
+      <SignInSide/>
       </ThemeProvider>
   )
 }
