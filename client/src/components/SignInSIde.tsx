@@ -26,13 +26,38 @@ function Copyright() {
 }
 
 function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const LoginData = {
+      email: data.get('email'),
+      password: data.get('password')
+    };
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+    try{
+      const response = await fetch('http://localhost:5210/api/Account/login', {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(LoginData),
+      });
+
+      if(!response.ok)
+      {
+        throw new Error('Something went wrong');
+      }
+
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+    }
+    catch (error)
+    {
+      console.log('Error:', error);
+    }
   };
 
   return (
