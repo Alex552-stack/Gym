@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -58,8 +59,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+});
 app.UseHttpsRedirection();
-
 app.UseAuthentication(); // Use authentication
 app.UseAuthorization();
 
