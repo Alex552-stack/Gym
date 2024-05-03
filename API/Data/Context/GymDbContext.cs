@@ -14,6 +14,8 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
     {
         base.OnModelCreating(builder);
 
+
+
         builder.Entity<IdentityRole>()
             .HasData(
                 new IdentityRole
