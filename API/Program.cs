@@ -59,16 +59,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 });
-app.UseHttpsRedirection();
+//app.useHttp();
 app.UseAuthentication(); // Use authentication
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapFallbackToController("Index", "Fallback");
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<GymDbContext>();

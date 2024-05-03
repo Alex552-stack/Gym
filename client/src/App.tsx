@@ -2,6 +2,8 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import './App.css'
 import Navbar from './components/Navbar';
 import SignInSide from './components/SignInSIde';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import RegisterPage from './components/RegisterPage';
 
 
 function App() {
@@ -14,7 +16,12 @@ function App() {
   return (
     <ThemeProvider theme = {theme}>
       <Navbar/>
-      <SignInSide/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<SignInSide />} />
+          <Route path="/register" element={<RegisterPage/>} />
+        </Routes>
+      </BrowserRouter>
       </ThemeProvider>
   )
 }

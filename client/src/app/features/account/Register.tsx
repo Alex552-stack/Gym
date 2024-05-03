@@ -25,11 +25,12 @@ function Copyright() {
   );
 }
 
-function SignInSide() {
+function RegisterPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const LoginData = {
+    const RegisterData = {
+      userName: data.get('name'),
       email: data.get('email'),
       password: data.get('password')
     };
@@ -38,12 +39,12 @@ function SignInSide() {
       password: data.get('password'),
     });
     try{
-      const response = await fetch('http://localhost:5210/api/Account/login', {
+      const response = await fetch( import.meta.env.VITE_API_URL + 'Account/register', {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(LoginData),
+        body: JSON.stringify(RegisterData),
       });
 
       if(!response.ok)
@@ -91,9 +92,19 @@ function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Register
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="User Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+              />
               <TextField
                 margin="normal"
                 required
@@ -133,8 +144,8 @@ function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                  <Link href="/login" variant="body2">
+                    {"Already have an account? Log in"}
                   </Link>
                 </Grid>
               </Grid>
@@ -146,4 +157,4 @@ function SignInSide() {
   );
 }
 
-export default SignInSide;
+export default RegisterPage;

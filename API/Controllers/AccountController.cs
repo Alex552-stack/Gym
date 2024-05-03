@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : BaseApiController
     {
         private readonly TokenService _tokenService;
@@ -41,6 +42,7 @@ namespace API.Controllers
             };
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
@@ -49,6 +51,12 @@ namespace API.Controllers
                 UserName = registerDto.Username,
                 Email = registerDto.Email
             };
+
+            var existingUser = await _userManager.FindByEmailAsync(user.Email);
+            if(existingUser != null)
+            {
+                return BadRequest($"Deja exista un user adresa de email {user.Email}");
+            }
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded)
