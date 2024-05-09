@@ -25,7 +25,7 @@ function Copyright() {
   );
 }
 
-function RegisterPage() {
+export default function Register() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -156,5 +156,3 @@ function RegisterPage() {
       </Grid>
   );
 }
-
-export default RegisterPage;

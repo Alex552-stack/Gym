@@ -62,10 +62,16 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseDefaultFiles();
 
-app.UseCors(opt =>
-{
-    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+app.UseCors(opt => opt
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials() // Allows credentials such as cookies, authorization headers, or TLS client certificates
+    .WithOrigins("http://localhost:3000")
+    .WithExposedHeaders("pagination") // Specify the exact origin
+);
+
+app.UseRouting();
+
 //app.useHttp();
 app.UseAuthentication(); // Use authentication
 app.UseAuthorization();
