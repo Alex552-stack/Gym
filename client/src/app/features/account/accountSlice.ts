@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { FieldValues } from "react-hook-form";
-import { toast } from "react-toastify";
-import { User } from "../../../models/user";
-import agent from "../../api/agent";
-import { router } from "../../Router/Routes";
+import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit"; // External library
+import { FieldValues } from "react-hook-form"; // External library
+import { toast } from "react-toastify"; // External library
+import { User } from "../../../models/user"; // Your own module
+import agent from "../../api/agent"; // Your own module
+import { router } from "../../Router/Routes"; // Your own module
 
 
 interface AccountState{
@@ -76,7 +76,7 @@ export const accountSlice = createSlice({
             let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
             state.user = {...action.payload, roles : typeof(roles) === "string" ? [roles] : roles};
         });
-        builder.addMatcher(isAnyOf(signInUser.rejected,), (state, action) => {
+        builder.addMatcher(isAnyOf(signInUser.rejected,), (_state, action) => {
             console.log(action.payload);
         })
     })

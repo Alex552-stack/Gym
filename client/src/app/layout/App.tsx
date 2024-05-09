@@ -4,12 +4,10 @@ import { useLocation, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "styled-components";
 import HomePage from "../features/HomePage/HomePage";
-import { fetchCurrentUser } from "../features/account/accountSlice";
 import { useAppDispatch } from "../store/configureStore";
 import LoadinComponent from "./LoadingComponent";
 import ResponsiveAppBar from "./Navbar";
-
-
+import { fetchCurrentUser } from "../features/account/accountSlice";
 
 export default function App() {
   const theme = createTheme({
