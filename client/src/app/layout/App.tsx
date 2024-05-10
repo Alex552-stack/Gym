@@ -2,7 +2,7 @@ import { createTheme, CssBaseline, Container } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
 import { useLocation, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "@mui/material/styles";
 import HomePage from "../features/HomePage/HomePage";
 import { useAppDispatch } from "../store/configureStore";
 import LoadinComponent from "./LoadingComponent";
@@ -11,9 +11,8 @@ import { fetchCurrentUser } from "../features/account/accountSlice";
 
 export default function App() {
   const theme = createTheme({
-    palette:
-    {
-      mode: 'dark'
+    palette: {
+     mode:'dark'
     }
   })
   const locaiton = useLocation();
