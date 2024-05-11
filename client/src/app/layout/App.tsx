@@ -38,7 +38,7 @@ export default function App() {
       <ResponsiveAppBar/>
       {loading ? <LoadinComponent message="Loading..." />
           : locaiton.pathname === '/' ? <HomePage />
-          : <Container sx = {{mt: 4}}>
+          : <Container sx={{mx:0, my: 0, px: 0 , py: 0, pl: 0, pr: 0}}>
               <Outlet />
            </Container>
       }

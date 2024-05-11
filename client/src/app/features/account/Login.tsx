@@ -13,6 +13,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { signInUser } from './accountSlice';
 import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
+import Image from '../../../Images/gymImage.png'
 
 function Copyright() {
   return (
@@ -34,7 +35,6 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.account);
   const { register, handleSubmit, formState: { isSubmitting, errors, isValid }} = useForm({mode: 'onTouched'});
-  
   async function submitForm(data: FieldValues){
     await dispatch(signInUser(data));
     toast("Succesfully logged in");
@@ -42,7 +42,7 @@ export default function Login() {
   }
 
   return (
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" maxHeight={50} sx={{padding: 0}}>
         <CssBaseline />
         <Grid
           item
@@ -50,7 +50,7 @@ export default function Login() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundImage: `url(${Image})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -61,11 +61,13 @@ export default function Login() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
+              my: 4,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              height: '100vh',
+              justifyContent: 'center',
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
