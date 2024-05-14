@@ -37,7 +37,7 @@ export default function Login() {
   const { register, handleSubmit, formState: { isSubmitting, errors, isValid }} = useForm({mode: 'onTouched'});
   async function submitForm(data: FieldValues){
     await dispatch(signInUser(data));
-    toast("Succesfully logged in");
+    //toast("Succesfully logged in");
     navigate(location.state?.form || '/');
   }
 

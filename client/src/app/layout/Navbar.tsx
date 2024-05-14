@@ -13,9 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../store/configureStore";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+//const pages = ["Products", "Pricing", "Blog"];
+//const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const leftLinks = [
   { title: "Products", path: "/products" },
@@ -23,12 +24,17 @@ const leftLinks = [
   { title: "Blog", path: "/blog" },
 ];
 
-const rightLinks = [
+const linkesIfConnected = [
   { title: "Account", path: "/account" },
   { title: "LogIn", path: "/login" },
   { title: "Register", path: "/register" },
   { title: "LogOut", path: "/logout" },
 ];
+
+const linksIfNotConnected = [
+  { title: "LogIn", path: "/login" },
+  { title: "Register", path: "/register" }
+]
 
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -46,6 +52,13 @@ export default function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
+  const handleClickIfConnected = (title : string) => {
+    handleCloseUserMenu;
+    if(title === "LogOut")
+      localStorage.removeItem('key');
+  } 
+
+  const {user} = useAppSelector(state => state.account);
   const handleCloseNavMenu = (path : string) => {
     setAnchorElNav(null);
     navigate(path);
@@ -175,10 +188,12 @@ export default function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {rightLinks.map((setting) => (
+              {
+              user? (
+              linkesIfConnected.map((setting) => (
                 <MenuItem 
                   key={setting.title} 
-                  onClick={handleCloseUserMenu}
+                  onClick={() => handleClickIfConnected(setting.title)}
                   >
                   <Typography 
                     textAlign="center"
@@ -188,7 +203,24 @@ export default function ResponsiveAppBar() {
                     to={setting.path}
                     >{setting.title}</Typography>
                 </MenuItem>
-              ))}
+              ))):(
+                linksIfNotConnected.map((setting) => (
+                  <MenuItem 
+                    key={setting.title} 
+                    onClick={handleCloseUserMenu}
+                    >
+                    <Typography 
+                      textAlign="center"
+                      style={{color: "inherit",
+                      textDecoration: "none"}}
+                      component={NavLink}
+                      to={setting.path}
+                      >{setting.title}</Typography>
+                  </MenuItem>
+                )))
+
+            
+            }
             </Menu>
           </Box>
         </Toolbar>
