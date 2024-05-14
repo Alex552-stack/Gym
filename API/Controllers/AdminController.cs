@@ -37,12 +37,44 @@ public class AdminController : BaseApiController
     [HttpGet("keyValuePair")]
     public async Task<IActionResult> KeyValuePair(string id)
     {
-        return Ok(await _context.Set<AuxData>().FindAsync(id));
+        var data = await _context.Set<AuxData>().FindAsync(id);
+        if(data is null) return NotFound(id);
+        return Ok(data);
     }
 
     [HttpGet("keyValuePair/list")]
     public async Task<ActionResult<List<string>>> KeyValuePairList()
     {
         return Ok(await _context.Set<AuxData>().Select(d => d.Key).ToListAsync());
+    }
+
+    [HttpPut("keyValuePair")]
+    public async Task<ActionResult> Put(AuxData data)
+    {
+        _context.Set<AuxData>().Update(data);
+        var result = await _context.SaveChangesAsync();
+
+        if(result == 0)
+        return UnprocessableEntity(data);
+
+        return Ok(data);
+    }
+
+    [HttpDelete("keyValuePair")]
+    public async Task<ActionResult> Delete([FromQuery] string key)
+    {
+        var toBeDeleted = await _context.Set<AuxData>().FindAsync(key);
+        if (toBeDeleted is null)
+            return NotFound("Nu a fost gasita nicio informatie cu cheia " + key);
+        
+        _context.Set<AuxData>().Remove(toBeDeleted);
+        var result = await _context.SaveChangesAsync();
+
+        if(result != 0)
+        {
+            return Ok(toBeDeleted);
+        }
+
+        return UnprocessableEntity(toBeDeleted);
     }
 }

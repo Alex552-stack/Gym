@@ -83,5 +83,9 @@ var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<GymDbContext>();
 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+context.Database.Migrate();
+
 ApplicationDbInitializer.SeedRoles(scope.ServiceProvider.GetRequiredService<RoleManager<Role>>());
+ApplicationDbInitializer.SeedAuxData(scope.ServiceProvider.GetRequiredService<GymDbContext>());
 app.Run();
