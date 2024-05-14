@@ -34,8 +34,8 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
-      <CssBaseline />
       <ResponsiveAppBar/>
+      <CssBaseline />
       {loading ? <LoadinComponent message="Loading..." />
           : locaiton.pathname === '/' ? <HomePage />
           : <Container maxWidth={false} sx={{mx:0, my: 0, px: 0 , py: 0, pl: 0, pr: 0}}>

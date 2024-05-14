@@ -56,7 +56,7 @@ export default function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ width: "100vp" }}>
+    <AppBar position="static" style={{ width: "100vp",height:78 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} 
