@@ -89,6 +89,23 @@ namespace API.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("API.Data.Entities.AuxData", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(55)
+                        .HasColumnType("character varying(55)");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("text");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("AuxDatas");
+                });
+
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -158,13 +175,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "68fabf50-151d-40b2-a874-8c78beb12d62",
+                            Id = "9df2e771-5a34-456c-b55f-bb9d797f1830",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "9f95b0d8-3c17-4d1b-ab9c-e2b1b1005d07",
+                            Id = "470b2eb6-e03f-43c0-a065-78a861931196",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

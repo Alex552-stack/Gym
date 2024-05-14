@@ -59,20 +59,33 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(opt =>
-{
-    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
-app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseDefaultFiles();
+
+app.UseCors(opt => opt
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials() // Allows credentials such as cookies, authorization headers, or TLS client certificates
+    .WithOrigins("http://localhost:3000")
+    .WithExposedHeaders("pagination") // Specify the exact origin
+);
+
+app.UseRouting();
+
+//app.useHttp();
 app.UseAuthentication(); // Use authentication
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapFallbackToController("Index", "Fallback");
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<GymDbContext>();
 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+context.Database.Migrate();
+
 ApplicationDbInitializer.SeedRoles(scope.ServiceProvider.GetRequiredService<RoleManager<Role>>());
+ApplicationDbInitializer.SeedAuxData(scope.ServiceProvider.GetRequiredService<GymDbContext>());
 app.Run();
