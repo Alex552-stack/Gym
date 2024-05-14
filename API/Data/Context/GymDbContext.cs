@@ -9,6 +9,7 @@ namespace API.Data.Context.GymDbContext;
 public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser, Role, int>(options)
 {
     public DbSet<TestData> Data { get; set; }
+    public DbSet<AuxData> AuxDatas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

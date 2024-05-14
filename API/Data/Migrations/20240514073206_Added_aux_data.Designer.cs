@@ -3,6 +3,7 @@ using System;
 using API.Data.Context.GymDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240514073206_Added_aux_data")]
+    partial class Added_aux_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,23 +92,6 @@ namespace API.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("API.Data.Entities.AuxData", b =>
-                {
-                    b.Property<string>("Key")
-                        .HasMaxLength(55)
-                        .HasColumnType("character varying(55)");
-
-                    b.Property<string>("Data")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("text");
-
-                    b.HasKey("Key");
-
-                    b.ToTable("AuxDatas");
-                });
-
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -175,13 +161,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9df2e771-5a34-456c-b55f-bb9d797f1830",
+                            Id = "01e7d478-1d6e-4dbf-a264-776776c3082e",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "470b2eb6-e03f-43c0-a065-78a861931196",
+                            Id = "5b89adf9-9c2b-45e7-872f-32b8de13d40c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

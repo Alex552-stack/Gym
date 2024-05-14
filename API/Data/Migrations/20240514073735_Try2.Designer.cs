@@ -3,6 +3,7 @@ using System;
 using API.Data.Context.GymDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240514073735_Try2")]
+    partial class Try2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +101,6 @@ namespace API.Data.Migrations
                     b.Property<string>("Data")
                         .HasColumnType("text");
 
-                    b.Property<string>("Details")
-                        .HasColumnType("text");
-
                     b.HasKey("Key");
 
                     b.ToTable("AuxDatas");
@@ -175,13 +175,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9df2e771-5a34-456c-b55f-bb9d797f1830",
+                            Id = "8fbfb03f-bda4-45b7-8b9a-d8e798039af9",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "470b2eb6-e03f-43c0-a065-78a861931196",
+                            Id = "5f947ebb-298f-4fc3-8d42-90eca6f29531",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
