@@ -30,10 +30,11 @@ export default function App() {
   useEffect(() => {
     initApp().then(() => setLoading(false))
   }, [initApp])
-  
+  //<ToastContainer position="bottom-right" hideProgressBar theme="colored" />
   return (
     <ThemeProvider theme={theme}>
-      <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+      
+      <CssBaseline />
       <ResponsiveAppBar/>
       <CssBaseline />
       {loading ? <LoadinComponent message="Loading..." />
