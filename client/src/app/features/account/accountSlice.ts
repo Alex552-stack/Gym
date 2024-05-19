@@ -56,11 +56,12 @@ export const accountSlice = createSlice({
         signOut: (state) => {
             state.user = null;
             localStorage.removeItem('user');
-            //router.navigate('/);
+            router.navigate('/');
         },
         setUser: (state,action) => {
             let claims = JSON.parse(atob(action.payload.token.split('.')[1]));
             let roles = claims['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            toast.success("Te-ai conectat cu succes");
             state.user = {...action.payload, roles: typeof(roles) === 'string' ? [roles] : roles};
         }
     },

@@ -26,8 +26,6 @@ const leftLinks = [
 
 const linkesIfConnected = [
   { title: "Account", path: "/account" },
-  { title: "LogIn", path: "/login" },
-  { title: "Register", path: "/register" },
   { title: "LogOut", path: "/logout" },
 ];
 
@@ -53,9 +51,10 @@ export default function ResponsiveAppBar() {
   };
 
   const handleClickIfConnected = (title : string) => {
-    handleCloseUserMenu;
-    if(title === "LogOut")
+    if(title === "LogOut"){
       localStorage.removeItem('key');
+    }
+    handleCloseUserMenu;
   } 
 
   const {user} = useAppSelector(state => state.account);
@@ -69,7 +68,7 @@ export default function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ width: "100vp",height:78 }}>
+    <AppBar position="static" style={{ width: "100vp" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} 

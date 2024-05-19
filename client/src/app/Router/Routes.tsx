@@ -4,6 +4,7 @@ import Login from "../features/account/Login";
 import Register from "../features/account/Register";
 import HomePage from "../features/HomePage/HomePage";
 import NotFound from "../errors/NotFound";
+import Account from "../features/account/Account";
 
 export const router = createBrowserRouter(
     [
@@ -22,6 +23,7 @@ export const router = createBrowserRouter(
                 {path: 'register', element: <Register/>},
                 {path: 'home', element: <HomePage/>},
                 {path: 'not-found', element: <NotFound/>},
+                {path: 'account', element: <Account/>},
                 {path: '*', element: <Navigate replace to={'/not-found'}/>}
             ]
         }

@@ -37,8 +37,8 @@ export default function HomePage() {
         justifyContent="center"
         alignItems="center"
         sx={{
-          height: '100vh', // Adjust for the height of the navbar
-          width: '100vw',
+          height: '90vh', // Adjust for the height of the navbar
+          width: '100%',
           margin: 0,
           padding: 0,
           backgroundImage: `url(${Image})`,
