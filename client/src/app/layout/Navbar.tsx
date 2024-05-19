@@ -19,7 +19,7 @@ import { useAppSelector } from "../store/configureStore";
 //const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const leftLinks = [
-  { title: "Products", path: "/products" },
+  { title: "About", path: "/about" },
   { title: "Pricing", path: "/pricing" },
   { title: "Blog", path: "/blog" },
 ];
