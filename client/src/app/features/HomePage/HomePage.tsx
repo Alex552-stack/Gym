@@ -1,7 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
-import Image from '../../../Images/GymPictureGood.jpg'; 
-import Image1 from '../../../Images/salaimagine.png';
-import Image2 from '../../../Images/Picturenr1.png'  // Adjust the path if necessary
+import gif from '../../../Images/giphy.gif'; 
+ // Adjust the path if necessary
 import { useState, useEffect } from 'react';
 
 export default function HomePage() {
@@ -32,28 +31,28 @@ export default function HomePage() {
           width: '100%',
           margin: 0,
           padding: 0,
-          backgroundImage: `url(${Image})`,
+          backgroundImage: `url(${gif})`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat'
         }}
       >
         <Grid item xs={12} sx={{ height: '100%', position: 'relative' }}>
-          <Box style={{color:'pink', opacity: '100%'}}>
+          <Box style={{color:'black', opacity: '80%'}}>
             <Typography
               variant="h3"
               component="div"
               sx={{
                 position: 'absolute',
                 top: '40%',
-                left: '35%',
+                left: '21%',
                 transform: 'translate(-50%, -50%)',
-                fontSize: isSmallScreen ? '80px' : '160px', 
+                fontSize: isSmallScreen ? '60px' : '100px', 
                 color: 'transparent',
                 backgroundImage: 'linear-gradient(#fff, #fff)',
                 backgroundRepeat: 'no-repeat',
                 WebkitBackgroundClip: 'text',
                 backgroundPosition: '-800px 0',
-                animation: 'backcolor 3s linear infinite alternate',
+                animation: 'backcolor 4s linear infinite alternate',
                 '@keyframes backcolor': {
                   '100%': {
                     backgroundPosition: '0 0',
@@ -61,27 +60,9 @@ export default function HomePage() {
                 },
               }}
             >
-               Get Fit
-              With Us
+               WELCOME!
             </Typography>
           </Box>
-        </Grid>
-        <Grid item xs={12} sx={{ textAlign: 'center', marginTop: '20px' }}>
-          <Typography variant="h5">
-            hello
-          </Typography>
-        </Grid>
-        <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-          <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-            <img src={Image1} alt="Cute" style={{ maxWidth: '100%', height: 'auto' }} />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <img src={Image2} alt="Second" style={{ maxWidth: '100%', height: 'auto' }} />
-              </Grid>
-            </Grid>
-          </Grid>
         </Grid>
       </Grid>
     </div>
