@@ -20,7 +20,7 @@ import { useAppSelector } from "../store/configureStore";
 
 const leftLinks = [
   { title: "About", path: "/about" },
-  { title: "Pricing", path: "/pricing" },
+  { title: "Contact", path: "/contact" },
   { title: "Blog", path: "/blog" },
 ];
 
