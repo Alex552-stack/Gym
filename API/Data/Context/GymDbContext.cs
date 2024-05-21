@@ -10,12 +10,15 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
 {
     public DbSet<TestData> Data { get; set; }
     public DbSet<AuxData> AuxDatas { get; set; }
+    public DbSet<GymVisit> GymVisits { get; set; } 
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-
+        builder.Entity<AppUser>()
+                .HasMany(u => u.GymVisits)
+                .WithOne(v => v.User)
+                .HasForeignKey(u => u.UserId);
 
         builder.Entity<IdentityRole>()
             .HasData(

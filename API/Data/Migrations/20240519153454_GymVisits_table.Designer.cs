@@ -3,6 +3,7 @@ using System;
 using API.Data.Context.GymDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519153454_GymVisits_table")]
+    partial class GymVisits_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,33 +109,6 @@ namespace API.Data.Migrations
                     b.ToTable("AuxDatas");
                 });
 
-            modelBuilder.Entity("API.Data.Entities.GymVisit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Day")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Mounth")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("GymVisits");
-                });
-
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -202,13 +178,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ae7d8bba-b1f1-4d6e-a1c9-f30c506a9329",
+                            Id = "421edef9-a8a2-492a-a3be-f9cbd23b9f1c",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "6bb7393b-af82-45b7-a869-375dfbb230b0",
+                            Id = "a90bae2b-e575-4374-bdf5-d8c26fc5b26d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -317,17 +293,6 @@ namespace API.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("API.Data.Entities.GymVisit", b =>
-                {
-                    b.HasOne("API.Data.Entities.AppUser", "User")
-                        .WithMany("GymVisits")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("API.Entities.Role", null)
@@ -377,11 +342,6 @@ namespace API.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Data.Entities.AppUser", b =>
-                {
-                    b.Navigation("GymVisits");
                 });
 #pragma warning restore 612, 618
         }
