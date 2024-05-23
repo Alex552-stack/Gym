@@ -15,11 +15,6 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.Entity<AppUser>()
-                .HasMany(u => u.GymVisits)
-                .WithOne(v => v.User)
-                .HasForeignKey(u => u.UserId);
-
         builder.Entity<IdentityRole>()
             .HasData(
                 new IdentityRole

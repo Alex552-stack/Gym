@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbContext, UserManager<AppUser> userManager) : BaseApiController
+public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbContext, UserManager<AppUser> userManager, AccountService accountService) : BaseApiController
 {
     private readonly QrCodeService _qrCodeService = qrCodeService;
     private readonly GymDbContext _context = gymDbContext;
     private readonly UserManager<AppUser> _userManager = userManager;
+
+    private readonly AccountService _accountService = accountService;
 
     [HttpPost("ScanQrCode")]
     public async Task<IActionResult> ScanQrCode(string qrCodeData)
@@ -37,14 +39,54 @@ public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbCont
         if(user == null)
             return BadRequest("Trebuie sa fi conectat pentru a putea dace aceasta actiune");
         
-        int visits = await _context.Set<GymVisit>().CountAsync(v => v.UserId == user.Id);
-        return Ok(visits);
+        var dates = await _context.Set<GymVisit>().Where(v => v.UserId == user.Id).ToListAsync();
+        return Ok(
+            new{
+                dates,
+                dates.Count
+            }
+        );
     }
 
     [HttpGet("GetQrCode")]
     public IActionResult GetQrCode()
     {
         return Ok(_qrCodeService.GenerateQrCode(DateTime.Now));
+    }
+
+    [HttpGet("Dates")]
+    public async  Task<IActionResult> GetCalendarDates()
+    {
+        var user = await _accountService.GetCurrentUser(User.Identity.Name);
+
+        if(user == null) return Unauthorized("Trebuie sa fi conectat pentru a putea efectua aceasta operatie");
+
+        var dates = await _context.Set<GymVisit>().Where(v => v.UserId == user.Id).ToListAsync();
+
+        return Ok(dates);
+
+    }
+
+    [HttpPost("Test")]
+    public async Task<IActionResult> PostVisit(int day, int mounth, int year)
+    {
+        var user = await _userManager.FindByNameAsync("alex");
+
+        var visit = new GymVisit{
+                User = user,
+                UserId = user.Id,
+                Year = year,
+                Mounth = mounth,
+                Day = day
+            };
+
+        _context.Set<GymVisit>().Add(
+            visit
+        );
+
+        _context.SaveChanges();
+
+        return Ok(visit);
     }
 
 }

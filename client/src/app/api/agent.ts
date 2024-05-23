@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { store } from "../store/configureStore";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
 axios.defaults.withCredentials = true;
 
 const sleep = () => new Promise(rezolve => setTimeout(rezolve, 400));
@@ -76,8 +77,15 @@ const Account = {
     checkEmailapi: (values: any) => request.post('account/checkEmailapi', values)
 }
 
+const Visists = {
+    ScanQrCode: (qrCode: String) => request.post('Dates/ScanQrCode', qrCode),
+    GetGymVisits: () => request.get('Dates/GetGymVisits'),
+    GetQrCode: () => request.get('GetQrCode')
+}
+
 const agent = {
-    Account
+    Account,
+    Visists
 }
 
 export default agent;

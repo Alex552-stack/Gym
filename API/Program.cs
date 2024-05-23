@@ -48,8 +48,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
-
 builder.Services.AddScoped<QrCodeService>();
+builder.Services.AddScoped<AccountService>();
+
 builder.Services.AddCors();
 
 var app = builder.Build();

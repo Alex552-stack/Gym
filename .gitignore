@@ -2,3 +2,6 @@ API/obj
 API/bin
 client/node_modules
 .fake
+.idea/.idea.website_gym/.idea/projectSettingsUpdater.xml
+
+.idea/.idea.website_gym/.idea/workspace.xml

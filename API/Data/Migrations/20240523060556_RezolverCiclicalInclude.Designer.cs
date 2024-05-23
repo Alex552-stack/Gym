@@ -3,6 +3,7 @@ using System;
 using API.Data.Context.GymDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523060556_RezolverCiclicalInclude")]
+    partial class RezolverCiclicalInclude
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,13 +205,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4f1098b3-11f4-49b7-a2f6-be6abc7b5ce2",
+                            Id = "b605dc64-7844-4c36-91f7-8235a06a6f27",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "65f1638e-3c17-4f2e-9cc2-5698c24c9f0b",
+                            Id = "adaecb7f-e4ec-42b1-9409-70234c0e4ea3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -320,7 +323,7 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Data.Entities.GymVisit", b =>
                 {
                     b.HasOne("API.Data.Entities.AppUser", "User")
-                        .WithMany()
+                        .WithMany("GymVisits")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -377,6 +380,11 @@ namespace API.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Data.Entities.AppUser", b =>
+                {
+                    b.Navigation("GymVisits");
                 });
 #pragma warning restore 612, 618
         }
