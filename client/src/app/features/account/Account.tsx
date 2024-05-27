@@ -1,28 +1,31 @@
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useEffect, useState } from 'react';
 import agent from '../../api/agent';
 import LoadinComponent from '../../layout/LoadingComponent';
-import { isAllOf } from '@reduxjs/toolkit';
-import { Dayjs } from 'dayjs';
+ // Import the correct component
+import dayjs, { Dayjs } from 'dayjs';
+import DateCalendarServerRequest from '../../components/DateCalendarWHighlight';
+
+const convertToDayjs = (dates: any) => dates.map((date: { year: number; mounth: number; day: number }) => dayjs(new Date(date.year, date.mounth - 1, date.day)));
 
 export default function Account() {
-  const[visits, setvisits] = useState(new Dayjs);
-  const[visitCount, setvisitCount] = useState(0);
-  const[loadin, setLoading] = useState(true);
+  const [visits, setVisits] = useState<Dayjs[]>([]);
+  const [visitCount, setVisitCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  agent.Visists.GetGymVisits().then((response) => {
-      setvisitCount(response.count);
-      setvisits(response.dates)
+  useEffect(() => {
+    agent.Visists.GetGymVisits().then((response) => {
+      setVisitCount(response.count);
+      var dates = convertToDayjs(response.dates);
+      console.log(dates);
+      setVisits(dates);
       setLoading(false);
-  })
+    })
+  }, [])
 
-  if(loadin)
-    return <LoadinComponent/>
+  if (loading)
+    return <LoadinComponent />
 
   return (
-    <DateCalendarWHighlight highlightedDates={visits}/>
+    <DateCalendarServerRequest highlightedDays={visits} />
   );
 }

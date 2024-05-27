@@ -5,6 +5,7 @@ using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -16,15 +17,16 @@ namespace API.Controllers
         //private readonly EmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private readonly GymVisitsService _visitsService;
         private readonly UserManager<AppUser> _userManager;
-        public AccountController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration, UserManager<AppUser> userManager, TokenService tokenService, GymDbContext context/*, EmailService emailService*/)
+        public AccountController(GymVisitsService visitsService, IWebHostEnvironment webHostEnvironment, IConfiguration configuration, UserManager<AppUser> userManager, TokenService tokenService, GymDbContext context/*, EmailService emailService*/)
         {
             _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
             _context = context;
             _tokenService = tokenService;
             _userManager = userManager;
+            _visitsService = visitsService;
 
         }
 
@@ -34,6 +36,9 @@ namespace API.Controllers
             var user = await _userManager.FindByNameAsync(loginDto.Username);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
+
+            await _visitsService.AddGymVisitFor(user.Id);
+            
             return new AppUserDto
             {
                 Email = user.Email,
@@ -76,6 +81,8 @@ namespace API.Controllers
 
             var message = $"Your verification link is {confirmationLink}";
 
+            _visitsService.AddGymVisitFor(user.Id);
+
             return StatusCode(201);
         }
 
@@ -84,6 +91,10 @@ namespace API.Controllers
         public async Task<ActionResult<AppUserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (user is not null)
+            {
+                await _visitsService.AddGymVisitFor(user.Id);
+            }
 
             return new AppUserDto
             {

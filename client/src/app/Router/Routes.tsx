@@ -7,6 +7,7 @@ import NotFound from "../errors/NotFound";
 import Account from "../features/account/Account";
 import About from "../features/About/About";
 import Contact from "../features/Contact/Contact";
+import Logout from "../features/account/Logout";
 
 export const router = createBrowserRouter(
     [
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(
 
                 {path: 'login', element: <Login/>},
                 {path: 'register', element: <Register/>},
+                {path: 'logout', element: <Logout/>},
                 {path: 'home', element: <HomePage/>},
                 {path: 'not-found', element: <NotFound/>},
                 {path: 'account', element: <Account/>},

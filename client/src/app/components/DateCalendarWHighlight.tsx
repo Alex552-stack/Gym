@@ -7,15 +7,14 @@ import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
-function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDates?: Dayjs[] }) {
-  const { highlightedDates = [], day, outsideCurrentMonth, ...other } = props;
+function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: Dayjs[] }) {
+  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
 
-  const isSelected =
-    !props.outsideCurrentMonth && highlightedDates.some(highlightedDay => highlightedDay.isSame(day, 'day'));
+  const isSelected = !outsideCurrentMonth && highlightedDays.some(highlightedDay => highlightedDay.isSame(day, 'day'));
 
   return (
     <Badge
-      key={props.day.toString()}
+      key={day.toString()}
       overlap="circular"
       badgeContent={isSelected ? '🌚' : undefined}
     >
@@ -24,32 +23,20 @@ function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDates?: Dayjs[] 
   );
 }
 
-interface DateCalendarWHighlight {
-  highlightedDates: Dayjs[];
-}
-
-export default function DateCalendarWHighlight({ highlightedDates }: DateCalendarWHighlight) {
-  const [currentHighlightedDates, setCurrentHighlightedDates] = React.useState(highlightedDates);
-
-  React.useEffect(() => {
-    setCurrentHighlightedDates(highlightedDates);
-  }, [highlightedDates]);
-
-  const handleMonthChange = (date: Dayjs) => {
-    // Optionally handle month change if needed
-  };
+export default function DateCalendarServerRequest({ highlightedDays }: { highlightedDays: Dayjs[] }) {
+  const [isLoading, setIsLoading] = React.useState(false);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        defaultValue={dayjs('2022-04-17')}
-        onMonthChange={handleMonthChange}
+        loading={isLoading}
+        renderLoading={() => <DayCalendarSkeleton />}
         slots={{
           day: ServerDay,
         }}
         slotProps={{
           day: {
-            highlightedDates: currentHighlightedDates,
+            highlightedDays,
           } as any,
         }}
       />

@@ -21,38 +21,64 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        height: '90vh', // Adjust for the height of the navbar
+        width: '100%',
+        margin: 0,
+        padding: 0,
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${gif})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          zIndex: -1,
+        }}
+      />
       <Grid
         container
         justifyContent="center"
         alignItems="center"
         sx={{
-          height: '90vh', // Adjust for the height of the navbar
+          height: '100%',
           width: '100%',
           margin: 0,
           padding: 0,
-          backgroundImage: `url(${gif})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
         }}
       >
         <Grid item xs={12} sx={{ height: '100%', position: 'relative' }}>
-          <Box style={{color:'black', opacity: '80%'}}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              padding: '20px',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)', // 50% transparent black background
+              borderRadius: '10px',
+            }}
+          >
             <Typography
               variant="h3"
               component="div"
               sx={{
-                position: 'absolute',
-                top: '40%',
-                left: '21%',
-                transform: 'translate(-50%, -50%)',
-                fontSize: isSmallScreen ? '60px' : '100px', 
+                fontSize: isSmallScreen ? '60px' : '100px',
                 color: 'transparent',
                 backgroundImage: 'linear-gradient(#fff, #fff)',
                 backgroundRepeat: 'no-repeat',
                 WebkitBackgroundClip: 'text',
                 backgroundPosition: '-800px 0',
                 animation: 'backcolor 4s linear infinite alternate',
+                textAlign: 'center',
                 '@keyframes backcolor': {
                   '100%': {
                     backgroundPosition: '0 0',
@@ -60,11 +86,11 @@ export default function HomePage() {
                 },
               }}
             >
-               WELCOME!
+              WELCOME!
             </Typography>
           </Box>
         </Grid>
       </Grid>
     </div>
   );
-}
+};

@@ -4,34 +4,18 @@ import { Container, Typography, Box, Grid, IconButton, Paper } from '@mui/materi
 import { Email, LocationOn } from '@mui/icons-material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-const mapContainerStyle = {
-  width: '100%',
-  height: '400px',
-  borderRadius: '8px',
-};
-
-const center = {
-  lat: 45.1047, // Latitude of Râmnicu Vâlcea
-  lng: 24.3754, // Longitude of Râmnicu Vâlcea
-};
 
 const ContactUs = () => {
+
+  
+
   return (
     <Container sx={{ mt: 5 }}>
       <Grid container spacing={3} alignItems="center">
         <Grid item xs={12} md={6}>
           <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-            <LoadScript googleMapsApiKey="AIzaSyAqKQzS_NPGKfEKeylE-7AQc3n_QbMo4l8">
-              <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                center={center}
-                zoom={15}
-              >
-                <Marker position={center} />
-              </GoogleMap>
-            </LoadScript>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d691.1056362506899!2d24.37586833320029!3d45.103680401953554!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x474d38a3925d7591%3A0x6c98e6bac927e125!2sVeterinary%20clinic%20Draghici!5e0!3m2!1sen!2sus!4v1716740816679!5m2!1sen!2sus" width="600" height="450" ></iframe>
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>

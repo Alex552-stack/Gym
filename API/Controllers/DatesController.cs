@@ -18,7 +18,7 @@ public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbCont
     [HttpPost("ScanQrCode")]
     public async Task<IActionResult> ScanQrCode(string qrCodeData)
     {
-        if(User.Identity.Name == null)
+        if(User.Identity?.Name == null)
             return Unauthorized();
         var user = await _userManager.FindByNameAsync(User.Identity.Name);
         if (user == null)
