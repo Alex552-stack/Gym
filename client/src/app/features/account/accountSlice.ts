@@ -28,6 +28,7 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
     }
 )
 
+
 export const fetchCurrentUser = createAsyncThunk<User>(
     'account/fetchCurrentUser',
     async (_, thunkAPI) => {

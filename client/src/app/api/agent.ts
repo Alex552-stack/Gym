@@ -78,9 +78,9 @@ const Account = {
 }
 
 const Visists = {
-    ScanQrCode: (qrCode: String) => request.post('Dates/ScanQrCode', qrCode),
+    ScanQrCode: (qrCode: String | null) => request.post(`Dates/ScanQrCode/?qrCodeData=${qrCode}`, ""),
     GetGymVisits: () => request.get('Dates/GetGymVisits'),
-    GetQrCode: () => request.get('GetQrCode')
+    GetQrCode: () => request.get('Dates/GetQrCode')
 }
 
 const agent = {

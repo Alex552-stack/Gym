@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Web;
 
 namespace API.Services;
 
@@ -28,7 +29,8 @@ public class QrCodeService
         if(DateTime.TryParse(dateData, out visitDate))
         {
             string expectedSignature = GenerateSignature(dateData);
-            return recievedSignature == expectedSignature && visitDate.Date == DateTime.UtcNow.Date;
+            return ((recievedSignature.Replace(' ', '+')).Trim()) == expectedSignature &&
+                   visitDate.Date == DateTime.UtcNow.Date;
         }
 
         return false;

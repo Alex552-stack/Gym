@@ -16,7 +16,7 @@ public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbCont
     private readonly AccountService _accountService = accountService;
 
     [HttpPost("ScanQrCode")]
-    public async Task<IActionResult> ScanQrCode(string qrCodeData)
+    public async Task<IActionResult> ScanQrCode([FromQuery] string qrCodeData)
     {
         if(User.Identity?.Name == null)
             return Unauthorized();
@@ -27,6 +27,7 @@ public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbCont
         {
             GymVisit visit = new GymVisit(user.Id, visitDate);
             await _context.AddAsync(visit);
+            await _context.SaveChangesAsync();
             return Ok();
         }
         return BadRequest("QrCode invalid");

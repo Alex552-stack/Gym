@@ -37,7 +37,7 @@ namespace API.Controllers
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
 
-            await _visitsService.AddGymVisitFor(user.Id);
+            //await _visitsService.AddGymVisitFor(user.Id);
             
             return new AppUserDto
             {
@@ -81,7 +81,7 @@ namespace API.Controllers
 
             var message = $"Your verification link is {confirmationLink}";
 
-            _visitsService.AddGymVisitFor(user.Id);
+            //_visitsService.AddGymVisitFor(user.Id);
 
             return StatusCode(201);
         }
@@ -93,7 +93,7 @@ namespace API.Controllers
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user is not null)
             {
-                await _visitsService.AddGymVisitFor(user.Id);
+                //await _visitsService.AddGymVisitFor(user.Id);
             }
 
             return new AppUserDto
