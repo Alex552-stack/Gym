@@ -37,13 +37,19 @@ namespace API.Controllers
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
                 return Unauthorized();
 
+            Tiers tier = await _visitsService.GetGymVisitsForUser(user.Id);
+            Tiers nextTier = await _visitsService.NextTier(tier);
+            int visitCount = (await _visitsService.GetAllGymVIsits(user.Id)).Count;
             //await _visitsService.AddGymVisitFor(user.Id);
             
             return new AppUserDto
             {
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
-                EmailConfirmed = user.EmailConfirmed
+                EmailConfirmed = user.EmailConfirmed,
+                NumberofTotalVisits = (int)visitCount,
+                UnlockedTier = (Tiers)tier,
+                NextTier = nextTier
             };
         }
 
@@ -91,16 +97,25 @@ namespace API.Controllers
         public async Task<ActionResult<AppUserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            Tiers? tier = null;
+            Tiers? nextTier = null;
+            int? visitCount = 0;
+            
             if (user is not null)
             {
-                //await _visitsService.AddGymVisitFor(user.Id);
+                tier = await _visitsService.GetGymVisitsForUser(user.Id);
+                visitCount = (await _visitsService.GetAllGymVIsits(user.Id)).Count;
+                nextTier = await _visitsService.NextTier(tier);
             }
 
             return new AppUserDto
             {
                 Email = user.Email,
                 Token = await _tokenService.GenerateToken(user),
-                EmailConfirmed = user.EmailConfirmed
+                EmailConfirmed = user.EmailConfirmed,
+                NumberofTotalVisits = (int)visitCount,
+                UnlockedTier = (Tiers)tier,
+                NextTier = nextTier
             };
         }
 

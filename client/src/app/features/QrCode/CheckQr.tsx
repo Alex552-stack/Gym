@@ -1,11 +1,11 @@
-import { useLocaleText } from "@mui/x-date-pickers/internals"
 import { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
 import agent from "../../api/agent";
 import { toast } from "react-toastify";
-import LoadinComponent from "../../layout/LoadingComponent";
-import { DeleteForeverSharp } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import LoadingComponent from "../../layout/LoadingComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { scanQrCode } from "../../features/account/accountSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../../store/configureStore";
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -14,51 +14,36 @@ const useQuery = () => {
 const CheckQr = () => {
     const query = useQuery();
     const qrCode = query.get('code');
-    console.log(qrCode);
-    const[isValid, setIsValid] = useState(null);
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const QrCode = useDispatch
-
-    if(qrCode == null)
-        navigate('/');
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => state.account);
 
     useEffect(() => {
-        /*const checkQrCode =  () => {
-            try {
-                console.log(qrCode);
-                const response = await agent.Visists.ScanQrCode(qrCode);
-                if (response.success) {
-                    toast.success("QR code registered successfully!");
-                    //setIsValid(true);
-                } else {
-                    throw new Error(response.message || "QR code registration failed");
-                }
-            } catch (error : any) {
-                setError(error.message);
-                toast.error(`Error: ${error.message}`);
-                //setIsValid(false);
-            } finally {
+        const checkQrCode = async () => {
+            if (!qrCode) {
+                toast.error("No QR code provided");
                 setLoading(false);
                 navigate('/');
+                return;
             }
-        };*/
-
-        const checkQrCode = async () => {
-            try{
-                agent.Visists.ScanQrCode(qrCode).then((response) => {
-                    console.log(response);
-                    if(response == null)
-                        toast.error("Smth went wrong");
-                    else
-                        toast.success("Good");
-                    navigate('/');
-                })
-            }
-            catch(error : any)
-            {
+            try {
+                await dispatch(scanQrCode({ qrCode }));
+                if (user) {
+                    // User is logged in, scan the QR code
+                    await dispatch(scanQrCode({ qrCode }));
+                    //toast.success("QR code scanned successfully!");
+                } else {
+                    // User is not logged in, save the QR code and redirect to login
+                    toast.info("You need to log in to scan the QR code");
+                    
+                    navigate(`/login?redirect=check-qr&code=${qrCode}`);
+                }
+            } catch (error: any) {
                 setError(error.message);
+                toast.error(`Error: ${error.message}`);
+            } finally {
                 setLoading(false);
             }
         };
@@ -70,14 +55,11 @@ const CheckQr = () => {
             setLoading(false);
             navigate('/');
         }
-    }, [qrCode, navigate]);
+    }, [qrCode, navigate, user, dispatch]);
 
-    if(loading) return <LoadinComponent/>
+    if (loading) return <LoadingComponent />;
 
-    return (
-        <></>
-    )
-
-}
+    return <></>;
+};
 
 export default CheckQr;

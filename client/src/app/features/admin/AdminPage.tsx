@@ -1,47 +1,54 @@
-import { useEffect, useState } from "react";
-import agent from "../../api/agent";
-import LoadinComponent from "../../layout/LoadingComponent";
-import { Typography } from "@mui/material";
-import QRCode from 'qrcode.react';
+import React, { useEffect, useState } from 'react';
+import { Container, Typography, Box } from '@mui/material';
+import { Tier } from '../../../models/Tiers';
+import TierEditor from '../../components/TierEditor';
+import { useAppDispatch, useAppSelector } from '../../store/configureStore';
+import { getTiers } from '../account/accountSlice';
+import agent from '../../api/agent';
 
-export default function AdminPage()
-{
-    const [qrData, setQrData] = useState(null);
-    const [loading,setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const AdminPage: React.FC = () => {
+  const tiersFromStore = useAppSelector(state => state.account.tiers);
+  const dispatch = useAppDispatch();
+  const [tiers, setTiers] = useState<Tier[]>([]);
 
-    useEffect(() => {
-        const fetchQrData = async () => {
-            try {
-                agent.Visists.GetQrCode().then((response) => {
-                    console.log(response);
-                    setQrData(response);
-                    setLoading(false);
-                });
-            }
-            catch(error : any)
-            {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchTiers = async () => {
+      const resultAction = await dispatch(getTiers());
+      if (getTiers.fulfilled.match(resultAction)) {
+        const fetchedTiers = resultAction.payload as Tier[];
+        setTiers(fetchedTiers);
+      } else {
+        console.error('Failed to fetch tiers:', resultAction.payload);
+      }
+    };
 
-        fetchQrData();
-    }, []);
+    fetchTiers();
+  }, [dispatch]);
 
-    if(loading) return <LoadinComponent/>
-    if(error) return <div>Error</div>
+  useEffect(() => {
+    if (tiersFromStore.length > 0) {
+      setTiers(tiersFromStore);
+    }
+  }, [tiersFromStore]);
 
-    const url = `${window.location.origin}/check-qr?code=${qrData}`;
+  const handleSave = (updatedTier: Tier) => {
+    agent.Tiers.Edit(updatedTier);
+    // Here you could also send the updated tier to your backend
+    console.log('Updated Tiers:', updatedTier);
+  };
 
-    return (
-        <>
-            <Typography>
-                Qr Code check
-            </Typography>
-            <div style={{'backgroundColor': 'white', 'textAlign': 'center'}}>
-                <QRCode value={url} />
-            </div>
-        </>
-    )
-}
+  return (
+    <Container>
+      <Typography variant="h4" gutterBottom>
+        Manage Tiers
+      </Typography>
+      <Box display="flex" flexDirection="column" gap={4}>
+        {tiers.map((tier) => (
+          <TierEditor key={tier.Id} tier={tier} onSave={handleSave} />
+        ))}
+      </Box>
+    </Container>
+  );
+};
+
+export default AdminPage;

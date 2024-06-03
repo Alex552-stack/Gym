@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { store } from "../store/configureStore";
+import { Tier } from "../../models/Tiers";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
@@ -78,14 +79,23 @@ const Account = {
 }
 
 const Visists = {
-    ScanQrCode: (qrCode: String | null) => request.post(`Dates/ScanQrCode/?qrCodeData=${qrCode}`, ""),
+    ScanQrCode: (qrCode: any) => request.post(`Dates/ScanQrCode/?qrCodeData=${qrCode}`, ""),
     GetGymVisits: () => request.get('Dates/GetGymVisits'),
-    GetQrCode: () => request.get('Dates/GetQrCode')
+    GetQrCode: () => request.get('Dates/GetQrCode'),
+    GetInterval: (timeStart: Date, timeStop: Date) => request.get(`Dates/interval?timeStart=${timeStart.toISOString()}&timeStop=${timeStop.toISOString()}`)
+}
+
+const Tiers = {
+    Get: (id : any) => request.get(`Tiers/?id=${id}`),
+    GetAll: () => request.get('Tiers'),
+    Edit: (tier : Tier) => request.put('Tiers', tier),
+    Add: (tier : Tier) => request.post('Tiers', tier)
 }
 
 const agent = {
     Account,
-    Visists
+    Visists,
+    Tiers
 }
 
 export default agent;

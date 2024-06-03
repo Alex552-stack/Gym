@@ -7,11 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbContext, UserManager<AppUser> userManager, AccountService accountService) : BaseApiController
+public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbContext, UserManager<AppUser> userManager, AccountService accountService, GymVisitsService gymVisitsService) : BaseApiController
 {
     private readonly QrCodeService _qrCodeService = qrCodeService;
     private readonly GymDbContext _context = gymDbContext;
     private readonly UserManager<AppUser> _userManager = userManager;
+    private readonly GymVisitsService _gymVisitsService = gymVisitsService;
 
     private readonly AccountService _accountService = accountService;
 
@@ -88,6 +89,18 @@ public class DatesController(QrCodeService qrCodeService, GymDbContext gymDbCont
         _context.SaveChanges();
 
         return Ok(visit);
+    }
+
+    [HttpGet("interval")]
+    public async Task<IActionResult> GetInInterval(DateTime timeStart, DateTime timeStop)
+    {
+        var user = await _accountService.GetCurrentUser(User.Identity.Name);
+        
+        if(user == null) return Unauthorized("Trebuie sa fi conectat pentru a putea efectua aceasta operatie");
+
+        var dates = await _gymVisitsService.GetVisitsForUser(user.Id, timeStart, timeStop);
+        
+        return Ok(dates);
     }
 
 }

@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from '../../store/configureStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { signInUser } from './accountSlice';
-import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 import Image from '../../../Images/gymImage.png'
 
