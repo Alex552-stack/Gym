@@ -32,6 +32,14 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
             new Tiers()
             {
                 Id = 1,
+                Description = "The beggining of a new story",
+                Name = "Basic Tier",
+                RequiredCount = 0,
+                TimeToCompleteRequirement = TimeSpan.FromDays(1) // 1 month
+            },
+            new Tiers()
+            {
+                Id = 2,
                 Description = "The basic tear, easy for newcomers to achieve",
                 Name = "Iron Tier",
                 RequiredCount = 10,
@@ -39,7 +47,7 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
             },
             new Tiers()
             {
-                Id = 2,
+                Id = 3,
                 Description = "The first real milestone. You are starting to get stronger",
                 Name = "Bronze Tier",
                 RequiredCount = 30,
@@ -47,7 +55,7 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
             },
             new Tiers()
             {
-                Id = 3,
+                Id = 4,
                 Description = "Now you are starting to impress people with your physique. Keep going",
                 Name = "Iron Tier",
                 RequiredCount = 40,
@@ -55,7 +63,7 @@ public class GymDbContext(DbContextOptions options) : IdentityDbContext<AppUser,
             },
             new Tiers()
             {
-                Id = 4,
+                Id = 5,
                 Description = "The gym is your second home. Or maybe even the firts...",
                 Name = "Gold Tier",
                 RequiredCount = 60,
