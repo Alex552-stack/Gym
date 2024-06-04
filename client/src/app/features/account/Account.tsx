@@ -10,10 +10,8 @@ import {
   Chart as ChartJS,
   ChartConfiguration,
   ChartData,
-  ChartOptions,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import 'chart.js/auto';
+ import 'chart.js/auto';
 
 const convertToDayjs = (dates: any) =>
   dates.map((date: { year: number; mounth: number; day: number }) =>
@@ -217,8 +215,8 @@ export default function Account() {
           </Box>
         )}
       </Grid>
-      <div style={{ width: '100%', textAlign: 'center' }}>
-      <canvas ref={chartRef} style={{ maxWidth: '80%', margin: '0 auto' }}></canvas>
+      <div style={{ width: '50%', textAlign: 'center',marginLeft: '100px' }}>
+      <canvas ref={chartRef} style={{ maxWidth: '70%', margin: '0 auto',width:'150%' }}></canvas>
     </div>
 
     </Grid>

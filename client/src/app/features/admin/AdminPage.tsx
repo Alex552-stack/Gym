@@ -44,7 +44,7 @@ const AdminPage: React.FC = () => {
       <Typography variant="h4" gutterBottom>
         Manage Tiers
       </Typography>
-      <Box display="flex" flexDirection="column" gap={4}>
+      <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={4}>
         {tiers.map((tier) => (
           <TierEditor key={tier.Id} tier={tier} onSave={handleSave} />
         ))}
