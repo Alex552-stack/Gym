@@ -18,6 +18,26 @@ const convertToDayjs = (dates: any) =>
     dayjs(new Date(date.year, date.mounth - 1, date.day))
   );
 
+  const groupVisitsByMonth = (dates: { year: number; mounth: number }[]) => {
+    const groupedData: { [key: string]: number } = {};
+    dates.forEach((date) => {
+      const monthKey = dayjs(new Date(date.year, date.mounth - 1)).format("MMMM");
+      if (!groupedData[monthKey]) {
+        groupedData[monthKey] = 0;
+      }
+      groupedData[monthKey]++;
+    });
+  
+    // Array of all months
+    const allMonths = Array.from({length: 12}, (_, i) => dayjs().month(i).format("MMMM"));
+  
+    // Map allMonths to groupedData
+    const completeData = allMonths.map(month => groupedData[month] || 0);
+  
+    return completeData;
+  };
+
+
 export default function Account() {
   const [visits, setVisits] = useState<Dayjs[]>([]);
   const [lifetimeVisits, setLifetimeVisits] = useState(0);
@@ -44,7 +64,13 @@ export default function Account() {
       }
       groupedData[monthKey]++;
     });
-    return groupedData;
+    // Array of all months
+  const allMonths = Array.from({length: 12}, (_, i) => dayjs().month(i).format("MMMM"));
+
+  // Map allMonths to groupedData
+  const completeData = allMonths.map(month => groupedData[month] || 0);
+
+  return completeData;
   };
 
   useEffect(() => {
