@@ -215,7 +215,7 @@ export default function Account() {
           </Box>
         )}
       </Grid>
-      <div style={{ width: '50%', textAlign: 'center',marginLeft: '100px' }}>
+      <div style={{ width: '50%', textAlign: 'center',marginLeft: '250px' }}>
       <canvas ref={chartRef} style={{ maxWidth: '70%', margin: '0 auto',width:'150%' }}></canvas>
     </div>
 
