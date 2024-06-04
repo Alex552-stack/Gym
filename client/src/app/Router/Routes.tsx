@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
                 {path: 'account', element: <Account/>},
                 {path: 'contact', element: <Contact/>},
                 {path: 'about', element: <About/>},
-                {path: 'blog', element: <AdminPage/>},
+                {path: 'Admin', element: <AdminPage/>},
                 {path: 'generate-qr', element: <QrGenerator/>},
                 {path: 'check-qr', element: <CheckQr/>},
                 {path: '*', element: <Navigate replace to={'/not-found'}/>}

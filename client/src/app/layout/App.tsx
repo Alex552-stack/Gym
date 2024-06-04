@@ -2,7 +2,7 @@ import 'material-react-toastify/dist/ReactToastify.css';
 import { createTheme, CssBaseline, Container } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
 import { useLocation, Outlet } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@mui/material/styles";
 import HomePage from "../features/HomePage/HomePage";
 import { useAppDispatch } from "../store/configureStore";

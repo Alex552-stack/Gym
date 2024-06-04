@@ -21,7 +21,7 @@ import { useAppSelector } from "../store/configureStore";
 const leftLinks = [
   { title: "About", path: "/about" },
   { title: "Contact", path: "/contact" },
-  { title: "Blog", path: "/blog" },
+  { title: "Admin", path: "/Admin" },
 ];
 
 const linkesIfConnected = [
