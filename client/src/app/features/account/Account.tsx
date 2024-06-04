@@ -33,6 +33,7 @@ export default function Account() {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const userResponse = useAppSelector((state) => state.account);
+  console.log(userResponse)
 
   const groupVisitsByMonth = (dates: { year: number; mounth: number }[]) => {
     const groupedData: { [key: string]: number } = {};

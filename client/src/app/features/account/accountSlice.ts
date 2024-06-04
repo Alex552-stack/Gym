@@ -12,6 +12,7 @@ interface AccountState {
     qrCode: string | null;
     pendingQrCode: string | null;
     tiers: Tier[]; // Store tiers as an array
+    roles?: string[] | null;
 }
 
 interface ScanQrCodePayload {
@@ -23,6 +24,7 @@ const initialState: AccountState = {
     user: null,
     qrCode: null,
     pendingQrCode: null,
+    roles: null,
     tiers: [], // Initialize as an empty array
 };
 
