@@ -1,4 +1,5 @@
 using API.Data.Entities;
+using API.Entities;
 
 namespace API.Dtos;
 
@@ -10,4 +11,5 @@ public class AppUserDto
     public int NumberofTotalVisits { get; set; }
     public Tiers UnlockedTier { get; set; }
     public Tiers NextTier { get; set; }
+    public List<string> Roles { get; set; }
 }

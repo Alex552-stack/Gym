@@ -12,6 +12,7 @@ import Logout from "../features/account/Logout";
 import CheckQr from "../features/QrCode/CheckQr";
 import QrGenerator from "../features/admin/QrGenerator";
 import AdminPage from "../features/admin/AdminPage";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter(
     [
@@ -25,7 +26,11 @@ export const router = createBrowserRouter(
                         { path: 'orders', element: <Orders /> },
                     ]
                 },*/
-
+                {
+                    element: <RequireAuth roles={['Admin']}/>, children: [
+                        {path: 'Admin', element: <AdminPage/>},
+                    ]
+                },
                 {path: 'login', element: <Login/>},
                 {path: 'register', element: <Register/>},
                 {path: 'logout', element: <Logout/>},
@@ -34,7 +39,6 @@ export const router = createBrowserRouter(
                 {path: 'account', element: <Account/>},
                 {path: 'contact', element: <Contact/>},
                 {path: 'about', element: <About/>},
-                {path: 'Admin', element: <AdminPage/>},
                 {path: 'generate-qr', element: <QrGenerator/>},
                 {path: 'check-qr', element: <CheckQr/>},
                 {path: '*', element: <Navigate replace to={'/not-found'}/>}

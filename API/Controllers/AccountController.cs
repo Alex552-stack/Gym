@@ -1,6 +1,7 @@
 using API.Data.Context.GymDbContext;
 using API.Data.Entities;
 using API.Dtos;
+using API.Entities;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +50,8 @@ namespace API.Controllers
                 EmailConfirmed = user.EmailConfirmed,
                 NumberofTotalVisits = (int)visitCount,
                 UnlockedTier = (Tiers)tier,
-                NextTier = nextTier
+                NextTier = nextTier,
+                Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
         }
 
@@ -115,7 +117,8 @@ namespace API.Controllers
                 EmailConfirmed = user.EmailConfirmed,
                 NumberofTotalVisits = (int)visitCount,
                 UnlockedTier = (Tiers)tier,
-                NextTier = nextTier
+                NextTier = nextTier,
+                Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
         }
 
