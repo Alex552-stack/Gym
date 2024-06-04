@@ -69,6 +69,9 @@ public class GymVisitsService(GymDbContext context)
 
     public async Task<Tiers> NextTier(Tiers currentTier)
     {
+        if(currentTier == null) currentTier = new Tiers(){
+            Id = 0
+        };
         var nextTier = await _context.Set<Tiers>().Where(t => t.Id == currentTier.Id + 1).FirstOrDefaultAsync();
         return nextTier;
     }

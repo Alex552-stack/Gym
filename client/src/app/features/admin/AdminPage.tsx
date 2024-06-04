@@ -5,6 +5,7 @@ import TierEditor from '../../components/TierEditor';
 import { useAppDispatch, useAppSelector } from '../../store/configureStore';
 import { getTiers } from '../account/accountSlice';
 import agent from '../../api/agent';
+import QrGenerator from './QrGenerator';
 
 const AdminPage: React.FC = () => {
   const tiersFromStore = useAppSelector(state => state.account.tiers);
@@ -39,6 +40,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <Container>
+      <QrGenerator/>
       <Typography variant="h4" gutterBottom>
         Manage Tiers
       </Typography>

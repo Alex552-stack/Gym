@@ -38,6 +38,9 @@ export default function QrGenerator()
         <>
             <Typography>
                 Qr Code check
+                <Typography>
+                    {url}
+                </Typography>
             </Typography>
             <div style={{'backgroundColor': 'white', 'textAlign': 'center'}}>
                 <QRCode value={url} />

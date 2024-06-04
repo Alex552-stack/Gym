@@ -191,13 +191,15 @@ export default function ResponsiveAppBar() {
               user? (
               linkesIfConnected.map((setting) => (
                 <MenuItem 
+                  style={{zIndex : '5', width : '100%'}}
                   key={setting.title} 
                   onClick={() => handleClickIfConnected(setting.title)}
                   >
                   <Typography 
                     textAlign="center"
                     style={{color: "inherit",
-                    textDecoration: "none"}}
+                    textDecoration: "none",
+                    width: '100%'}}
                     component={NavLink}
                     to={setting.path}
                     >{setting.title}</Typography>
