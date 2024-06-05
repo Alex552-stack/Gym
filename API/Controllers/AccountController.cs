@@ -91,7 +91,7 @@ namespace API.Controllers
 
             //_visitsService.AddGymVisitFor(user.Id);
 
-            return StatusCode(201);
+            return Ok("User created");
         }
 
         [Authorize]

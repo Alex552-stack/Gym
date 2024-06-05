@@ -24,7 +24,7 @@ const AdminPage: React.FC = () => {
     };
 
     fetchTiers();
-  }, [dispatch]);
+}, [dispatch]);
 
   useEffect(() => {
     if (tiersFromStore.length > 0) {

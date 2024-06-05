@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -11,6 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Copyright() {
   return (
@@ -47,23 +47,26 @@ export default function Register() {
         body: JSON.stringify(RegisterData),
       });
 
-      if(!response.ok)
-      {
-        throw new Error('Something went wrong');
+      if (!response.ok) {
+        const errorResponse = await response.text();
+        throw new Error(errorResponse);
       }
 
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
+      console.log(response.text());
+      toast.success("Succesfully registered");
     }
-    catch (error)
+    catch (error : any)
     {
-      console.log('Error:', error);
+      console.log(error)
+      toast.error(`${error}`);
     }
   };
 
   return (
+    <>
+    <ToastContainer position="bottom-right" hideProgressBar theme="colored"/>
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
+        
         <Grid
           item
           xs={false}
@@ -135,7 +138,7 @@ export default function Register() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                REGISTER
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -154,5 +157,6 @@ export default function Register() {
           </Box>
         </Grid>
       </Grid>
+      </>
   );
 }

@@ -62,13 +62,7 @@ const request = {
     }).then(responseBody)
 }
 
-function createFormData(item: any){
-    let formData = new FormData();
-    for(const key in item){
-        formData.append(key, item[key])
-    }
-    return formData
-}
+
 
 const Account = {
     login: (values: any) => request.post('Account/login', values),

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class PostgresInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,19 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuxDates",
+                columns: table => new
+                {
+                    Key = table.Column<string>(type: "character varying(55)", maxLength: 55, nullable: false),
+                    Data = table.Column<string>(type: "text", nullable: true),
+                    Details = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuxDates", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Data",
                 columns: table => new
                 {
@@ -81,6 +94,22 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IdentityRole", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tiers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    TimeToCompleteRequirement = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    RequiredCount = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tiers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,13 +218,47 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GymVisits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Year = table.Column<int>(type: "integer", nullable: false),
+                    Mounth = table.Column<int>(type: "integer", nullable: false),
+                    Day = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GymVisits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GymVisits_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "IdentityRole",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "68fabf50-151d-40b2-a874-8c78beb12d62", null, "Member", "MEMBER" },
-                    { "9f95b0d8-3c17-4d1b-ab9c-e2b1b1005d07", null, "Admin", "ADMIN" }
+                    { "3297b884-9b35-4580-a902-1743ebd2efc4", null, "Admin", "ADMIN" },
+                    { "7680e814-b55f-4a64-abb0-401d804f97ce", null, "Member", "MEMBER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tiers",
+                columns: new[] { "Id", "Description", "Name", "RequiredCount", "TimeToCompleteRequirement" },
+                values: new object[,]
+                {
+                    { 1, "The beggining of a new story", "Basic Tier", 0, new TimeSpan(1, 0, 0, 0, 0) },
+                    { 2, "The basic tear, easy for newcomers to achieve", "Iron Tier", 10, new TimeSpan(30, 0, 0, 0, 0) },
+                    { 3, "The first real milestone. You are starting to get stronger", "Bronze Tier", 30, new TimeSpan(60, 0, 0, 0, 0) },
+                    { 4, "Now you are starting to impress people with your physique. Keep going", "Iron Tier", 40, new TimeSpan(90, 0, 0, 0, 0) },
+                    { 5, "The gym is your second home. Or maybe even the firts...", "Gold Tier", 60, new TimeSpan(120, 0, 0, 0, 0) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -234,6 +297,11 @@ namespace API.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GymVisits_UserId",
+                table: "GymVisits",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -255,10 +323,19 @@ namespace API.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AuxDates");
+
+            migrationBuilder.DropTable(
                 name: "Data");
 
             migrationBuilder.DropTable(
+                name: "GymVisits");
+
+            migrationBuilder.DropTable(
                 name: "IdentityRole");
+
+            migrationBuilder.DropTable(
+                name: "Tiers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

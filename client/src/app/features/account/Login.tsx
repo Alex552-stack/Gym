@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useAppDispatch, useAppSelector } from '../../store/configureStore';
+import { useAppDispatch } from '../../store/configureStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { signInUser } from './accountSlice';
@@ -32,7 +32,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.account);
   const { register, handleSubmit, formState: { isSubmitting, errors, isValid }} = useForm({mode: 'onTouched'});
   async function submitForm(data: FieldValues){
     await dispatch(signInUser(data));

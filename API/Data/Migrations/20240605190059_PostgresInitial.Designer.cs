@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    [Migration("20240514073206_Added_aux_data")]
-    partial class Added_aux_data
+    [Migration("20240605190059_PostgresInitial")]
+    partial class PostgresInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -92,6 +92,117 @@ namespace API.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("API.Data.Entities.AuxData", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(55)
+                        .HasColumnType("character varying(55)");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("text");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("AuxDates");
+                });
+
+            modelBuilder.Entity("API.Data.Entities.GymVisit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Day")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Mounth")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GymVisits");
+                });
+
+            modelBuilder.Entity("API.Data.Entities.Tiers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("RequiredCount")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan>("TimeToCompleteRequirement")
+                        .HasColumnType("interval");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tiers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "The beggining of a new story",
+                            Name = "Basic Tier",
+                            RequiredCount = 0,
+                            TimeToCompleteRequirement = new TimeSpan(1, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "The basic tear, easy for newcomers to achieve",
+                            Name = "Iron Tier",
+                            RequiredCount = 10,
+                            TimeToCompleteRequirement = new TimeSpan(30, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "The first real milestone. You are starting to get stronger",
+                            Name = "Bronze Tier",
+                            RequiredCount = 30,
+                            TimeToCompleteRequirement = new TimeSpan(60, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Now you are starting to impress people with your physique. Keep going",
+                            Name = "Iron Tier",
+                            RequiredCount = 40,
+                            TimeToCompleteRequirement = new TimeSpan(90, 0, 0, 0, 0)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "The gym is your second home. Or maybe even the firts...",
+                            Name = "Gold Tier",
+                            RequiredCount = 60,
+                            TimeToCompleteRequirement = new TimeSpan(120, 0, 0, 0, 0)
+                        });
+                });
+
             modelBuilder.Entity("API.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -161,13 +272,13 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "01e7d478-1d6e-4dbf-a264-776776c3082e",
+                            Id = "7680e814-b55f-4a64-abb0-401d804f97ce",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "5b89adf9-9c2b-45e7-872f-32b8de13d40c",
+                            Id = "3297b884-9b35-4580-a902-1743ebd2efc4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -274,6 +385,17 @@ namespace API.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("API.Data.Entities.GymVisit", b =>
+                {
+                    b.HasOne("API.Data.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

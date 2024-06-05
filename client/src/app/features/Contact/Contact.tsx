@@ -8,7 +8,7 @@ import {
   IconButton,
   Paper,
 } from "@mui/material";
-import { Email, LocationOn } from "@mui/icons-material";
+import { Business, Email } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
@@ -50,7 +50,7 @@ const ContactUs = () => {
             <Grid container spacing={3} direction="column" alignItems="center">
               <Grid item>
                 <IconButton
-                  href="https://www.instagram.com/yourprofile"
+                  href="https://www.csac.ro"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -60,7 +60,7 @@ const ContactUs = () => {
               </Grid>
               <Grid item>
                 <IconButton
-                  href="https://www.facebook.com/yourpage"
+                  href="https://scanstart.ro/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -69,23 +69,26 @@ const ContactUs = () => {
                 <Typography variant="body1">Facebook</Typography>
               </Grid>
               <Grid item>
-                <IconButton href="mailto:youremail@example.com">
+                <IconButton href="mailto:avrammateialexandru@outlook.com">
                   <Email fontSize="large" />
                 </IconButton>
                 <Typography variant="body1">Email</Typography>
               </Grid>
               <Grid item>
-                <IconButton disabled>
-                  <LocationOn fontSize="large" />
+                <IconButton
+                  href="https://graffino.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Business fontSize="large" />
                 </IconButton>
-                <Typography variant="body1">
-                  123 Your Street, Your City, Your Country
-                </Typography>
+                <Typography variant="body1">Graffino</Typography>
               </Grid>
             </Grid>
           </Box>
         </Grid>
       </Grid>
+      
     </Container>
   );
 };

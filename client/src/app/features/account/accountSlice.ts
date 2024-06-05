@@ -30,14 +30,14 @@ const initialState: AccountState = {
 
 export const getTiers = createAsyncThunk<Tier[]>(
     'tiers/get',
-    async (_, thunkAPI) => {
+    async (_) => {
         const tiers = await agent.Tiers.GetAll();
         return tiers.map((tier: any) => ({
             Id: tier.id,
             Name: tier.name,
             RequiredCount: tier.requiredCount,
-            Description: tier.description,
-            TimeToCompleteRequirement: tier.TimeToCompleteRequirement
+            description: tier.description,
+            timeToCompleteRequirement: tier.timeToCompleteRequirement
         }));
     }
 );
@@ -71,6 +71,7 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
     async (data, thunkAPI) => {
         try{
             const userDto = await agent.Account.login(data);
+            toast.success('Logged in successfully');
             const {...user} = userDto;
             localStorage.setItem('user', JSON.stringify(user));
              await thunkAPI.dispatch(fetchCurrentUser()); // Wait for fetchCurrentUser to ensure user state is updated
@@ -85,6 +86,7 @@ export const signInUser = createAsyncThunk<User, FieldValues>(
 
             return user;
         } catch (error : any) {
+            toast.error('Failed to log in');
             return thunkAPI.rejectWithValue({error: error.data})
         }
     }

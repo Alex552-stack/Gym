@@ -41,26 +41,26 @@ const TierEditor: React.FC<TierEditorProps> = ({ tier, onSave }) => {
           <TextField
             label="Name"
             name="Name"
-            value={editedTier.Name}
+            value={editedTier.name}
             onChange={handleChange}
           />
           <TextField
             label="DateTime"
             name="DateTime"
-            value={editedTier.TimeToCompleteRequirement}
+            value={editedTier.timeToCompleteRequirement}
             onChange={handleChange}
           />
           <TextField
             label="Required Count"
             name="RequiredCount"
             type="number"
-            value={editedTier.RequiredCount}
+            value={editedTier.requiredCount}
             onChange={handleChange}
           />
           <TextField
             label="Description"
             name="Description"
-            value={editedTier.Description}
+            value={editedTier.description}
             onChange={handleChange}
             multiline
             rows={4}

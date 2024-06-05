@@ -15,36 +15,51 @@ public static class ApplicationDbInitializer
             };
             roleManager.CreateAsync(role).Wait();
         }
+        if (!roleManager.RoleExistsAsync("ADMIN").Result)
+        {
+            Role role = new()
+            {
+                Name = "Admin"
+            };
+            roleManager.CreateAsync(role).Wait();
+        }
     }
 
     public static void SeedAuxData(GymDbContext context)
     {
         if (!context.Set<AuxData>().Any())
         {
-            AuxData[] auxData = {
-                new() {
+            AuxData[] auxData =
+            {
+                new()
+                {
                     Key = "LocationCount",
                     Data = "1"
                 },
-                new() {
+                new()
+                {
                     Key = "EmployeesCount",
                     Data = "1"
                 },
-                new() {
+                new()
+                {
                     Key = "CustomerCount",
                     Data = "1"
                 },
-                new() {
+                new()
+                {
                     Key = "SubscriptionPlan1",
                     Data = "150 lei/Luna",
                     Details = "Planul Basic"
                 },
-                new() {
+                new()
+                {
                     Key = "SubscriptionPlan2",
                     Data = "100 lei/Luna",
                     Details = "Planul Mid"
                 },
-                new() {
+                new()
+                {
                     Key = "SubscriptionPlan3",
                     Data = "50 lei/Luna",
                     Details = "Planul Gold"
@@ -52,6 +67,24 @@ public static class ApplicationDbInitializer
             };
             context.AddRange(auxData);
             context.SaveChanges();
+        }
+    }
+
+    public static void SeedUser(UserManager<AppUser> userManager)
+    {
+        if (userManager.FindByNameAsync("admin").Result == null)
+        {
+            var admin = new AppUser
+            {
+                UserName = "admin",
+                Email = "admin@admin.com"
+            };
+            var result = userManager.CreateAsync(admin, "Pa$$w0rd").Result;
+            if (result.Succeeded)
+            {
+                userManager.AddToRoleAsync(admin, "ADMIN").Wait();
+                userManager.AddToRoleAsync(admin, "MEMBER").Wait();
+            }
         }
     }
 }

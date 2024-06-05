@@ -1,5 +1,5 @@
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import Badge from '@mui/material/Badge';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -24,7 +24,7 @@ function ServerDay(props: PickersDayProps<Dayjs> & { highlightedDays?: Dayjs[] }
 }
 
 export default function DateCalendarServerRequest({ highlightedDays }: { highlightedDays: Dayjs[] }) {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading] = React.useState(false);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -21,7 +21,6 @@ import { useAppSelector } from "../store/configureStore";
 const leftLinks = [
   { title: "About", path: "/about" },
   { title: "Contact", path: "/contact" },
-  { title: "Admin", path: "/Admin" },
 ];
 
 const linkesIfConnected = [
@@ -31,8 +30,8 @@ const linkesIfConnected = [
 
 const linksIfNotConnected = [
   { title: "LogIn", path: "/login" },
-  { title: "Register", path: "/register" }
-]
+  { title: "Register", path: "/register" },
+];
 
 export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -50,15 +49,15 @@ export default function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleClickIfConnected = (title : string) => {
-    if(title === "LogOut"){
-      localStorage.removeItem('key');
+  const handleClickIfConnected = (title: string) => {
+    if (title === "LogOut") {
+      localStorage.removeItem("key");
     }
     handleCloseUserMenu;
-  } 
+  };
 
-  const {user} = useAppSelector(state => state.account);
-  const handleCloseNavMenu = (path : string) => {
+  const { user } = useAppSelector((state) => state.account);
+  const handleCloseNavMenu = (path: string) => {
     setAnchorElNav(null);
     navigate(path);
   };
@@ -71,15 +70,16 @@ export default function ResponsiveAppBar() {
     <AppBar position="static" style={{ width: "100vp" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} 
+          <AdbIcon
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
             component={NavLink}
-            to={'/'}
+            to={"/"}
           />
           <Typography
             variant="h6"
             noWrap
             component={NavLink}
-            to={'/'}
+            to={"/"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -123,23 +123,43 @@ export default function ResponsiveAppBar() {
               }}
             >
               {leftLinks.map((page) => (
-                <MenuItem key={page.title} onClick={() => handleCloseNavMenu(page.path)}>
-                  <Typography 
+                <MenuItem
+                  key={page.title}
+                  onClick={() => handleCloseNavMenu(page.path)}
+                >
+                  <Typography
                     textAlign="center"
-                    style={{ textDecoration: 'none', color: 'inherit'}}         
-                  >{page.title}</Typography>
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {page.title}
+                  </Typography>
                 </MenuItem>
               ))}
+              {user && user.roles?.includes("Admin") && (
+                <MenuItem
+                  key={"Admin"}
+                  onClick={() => handleCloseNavMenu("/Admin")}
+                >
+                  <Typography
+                    textAlign="center"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    ADMIN
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} 
-                  component={NavLink}
-                  to={'/'}/>
+          <AdbIcon
+            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            component={NavLink}
+            to={"/"}
+          />
           <Typography
             variant="h5"
             noWrap
             component={NavLink}
-            to={'/'}
+            to={"/"}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -163,6 +183,15 @@ export default function ResponsiveAppBar() {
                 {page.title}
               </Button>
             ))}
+            {user && user.roles?.includes("Admin") && (
+                <Button
+                  key={"Admin"}
+                  onClick={() => handleCloseNavMenu("/Admin")}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                    ADMIN
+                </Button>
+              )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -187,41 +216,39 @@ export default function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {
-              user? (
-              linkesIfConnected.map((setting) => (
-                <MenuItem 
-                  style={{zIndex : '5', width : '100%'}}
-                  key={setting.title} 
-                  onClick={() => handleClickIfConnected(setting.title)}
-                  >
-                  <Typography 
-                    textAlign="center"
-                    style={{color: "inherit",
-                    textDecoration: "none",
-                    width: '100%'}}
-                    component={NavLink}
-                    to={setting.path}
-                    >{setting.title}</Typography>
-                </MenuItem>
-              ))):(
-                linksIfNotConnected.map((setting) => (
-                  <MenuItem 
-                    key={setting.title} 
-                    onClick={handleCloseUserMenu}
+              {user
+                ? linkesIfConnected.map((setting) => (
+                    <MenuItem
+                      style={{ zIndex: "5", width: "100%" }}
+                      key={setting.title}
+                      onClick={() => handleClickIfConnected(setting.title)}
                     >
-                    <Typography 
-                      textAlign="center"
-                      style={{color: "inherit",
-                      textDecoration: "none"}}
-                      component={NavLink}
-                      to={setting.path}
-                      >{setting.title}</Typography>
-                  </MenuItem>
-                )))
-
-            
-            }
+                      <Typography
+                        textAlign="center"
+                        style={{
+                          color: "inherit",
+                          textDecoration: "none",
+                          width: "100%",
+                        }}
+                        component={NavLink}
+                        to={setting.path}
+                      >
+                        {setting.title}
+                      </Typography>
+                    </MenuItem>
+                  ))
+                : linksIfNotConnected.map((setting) => (
+                    <MenuItem key={setting.title} onClick={handleCloseUserMenu}>
+                      <Typography
+                        textAlign="center"
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        component={NavLink}
+                        to={setting.path}
+                      >
+                        {setting.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
         </Toolbar>
