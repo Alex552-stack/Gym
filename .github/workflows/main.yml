@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Navigate to API folder
+        run: cd API 
+
       # Add steps to build and test your application
       # For Docker-based projects, you might build and push Docker images, run tests, etc.
       - name: Build and push Docker image
