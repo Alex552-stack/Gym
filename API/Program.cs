@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 string connString;
 // z
     connString = builder.Configuration.GetConnectionString("DefaultConnection");
-else
+//else
 {
 //     // Use connection string provided at runtime by FlyIO.
 //     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
