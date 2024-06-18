@@ -103,6 +103,7 @@ app.UseRouting();
 
 //app.useHttp();
 app.UseAuthentication(); // Use authentication
+
 app.UseAuthorization();
 
 app.MapControllers();
